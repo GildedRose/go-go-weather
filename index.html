@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Go Weather</title>
+    <link rel="stylesheet" href="./assets/css/style.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    <div class ="container">
+        <div class="grid header">
+            <header>
+                <h1 class="title">Go-Go Weather Dashboard</h1>
+            </header>
+        </div>
+        <div class="grid sidebar">
+            <div class="card">
+                <h3 class="card-header text-uppercase">Search By City</h3>
+                <form id="user-form" class="card-body">
+                  <label class="form-label" for="username">City</label>
+                  <input name="username" id="username" type="text" autofocus="true" class="form-input" />
+                  <button type="submit" class="btn">Search</button>
+                </form>
+              </div>
+        </div>
+        <div class="grid content"></div>
+        <div class="grid extra content"></div>
+        <div class="grid footer"></div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
