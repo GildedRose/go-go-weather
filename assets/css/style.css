@@ -33,7 +33,7 @@
     grid-column-end: 2;
     grid-row-start: 2;
     grid-row-end: 4;
-    background: lightgray;
+    background: var(--secondary-color);
 }
 
 .content {
@@ -41,7 +41,7 @@
     grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 3;
-    background: lightsteelblue;
+    background: var(--teriary-color);
     height: 400px;
 }
 
@@ -50,7 +50,7 @@
     grid-column-end: 3;
     grid-row-start: 3;
     grid-row-end: 4;
-    background: lightsteelblue;
+    background:var(--teriary-color);
 }
 
 .footer{
@@ -58,5 +58,5 @@
     grid-column-end: 3;
     grid-row-start: 4;
     grid-row-end: 5;
-    background: lightsteelblue;
+    background: var(--secondary-color);
 }
