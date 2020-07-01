@@ -1,8 +1,8 @@
 var userFormEl = document.querySelector("#user-form");
 var searchEl = document.querySelector("#search");
-var currentWeatherEl = document.querySelector("#current-container");
+var currentContainerEl = document.querySelector("#current-container");
 var citySearchEl = document.querySelector("#city-search-zip");
-var currentTempEl = document.querySelector("#weather-container");
+var rightNowEl = document.querySelector("#right-now");
 
 var i;
 
@@ -38,16 +38,38 @@ var displayCurrent = function(weather) {
     var weatherNowEl = document.createElement("p");
     weatherNowEl.classList = "list-item flex-row justify-space-between align-center";
     
-    var valueEl = document.createElement("span");
-    valueEl.textContent = weather["main"]["humidity"];
+    var temp = weather["main"]["temp"];
+
+    var fahrenheit = convertTemp(temp);
+    console.log(fahrenheit);
+
+    var tempEl = document.createElement("p");
+    tempEl.textContent = fahrenheit
+    
+    
+    
+    var humidityEl = document.createElement("p");
+    humidityEl.textContent = weather["main"]["humidity"];
 
     //append to container
-    weatherNowEl.appendChild(valueEl);
+    weatherNowEl.appendChild(tempEl);
+    weatherNowEl.appendChild(humidityEl);
 
     //append to dom
-    currentTempEl.appendChild(weatherNowEl);
+    rightNowEl.appendChild(weatherNowEl);
 
-}
+};
+
+// convert temp from kelvin to fahrenheit
+var convertTemp = function(kelvin) {
+    kelvin = parseFloat(kelvin);
+
+    var fahrenheit=((kelvin-273.15)*1.8)+32;
+    console.log(fahrenheit);
+
+    return fahrenheit;
+};
+
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
