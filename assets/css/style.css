@@ -28,6 +28,10 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.city {
+    background: var(--teriary-color);
+}
+
 .sidebar {
     grid-column-start: 1;
     grid-column-end: 2;
@@ -43,6 +47,10 @@
     grid-row-end: 3;
     background: var(--teriary-color);
     height: 400px;
+}
+
+p {
+    background: var(--teriary-color);
 }
 
 .extra {
