@@ -1,25 +1,28 @@
+var cities = [];
 var userFormEl = document.querySelector("#user-form");
 var searchEl = document.querySelector("#search");
 var currentContainerEl = document.querySelector("#current-container");
 var citySearchEl = document.querySelector("#city-search-zip");
 var rightNowEl = document.querySelector("#right-now");
+var savedCitiesEl = document.querySelector("#saved-cities");
 
-var getWeather = function(zipCode) {
-    var openWeather =  'https://api.openweathermap.org/data/2.5/weather?zip=' +
-        zipCode +
+
+var getWeather = function(city) {
+    var openWeather =  'https://api.openweathermap.org/data/2.5/weather?q=' +
+        city +
     '&appid=b1297dbea07dac5052c9756cbdb9040d'
-    fetch(openWeather)       
+    fetch(encodeURI(openWeather))       
         .then(function(response) {
             if (response.ok) { 
                 return response.json()
             } else {
-                alert("Error: Not a valid zip code");
+                alert("Error: Not a valid city.");
             }
         })
         .then(function(openWeatherData) {
             var lat = openWeatherData["coord"]["lat"];
             var lon = openWeatherData["coord"]["lon"];
-
+            console.log(openWeather); 
             displayCurrent(openWeatherData);
 
             return fetch(
@@ -34,6 +37,22 @@ var getWeather = function(zipCode) {
             uvResponseData["value"];
             displayUV(uvResponseData["value"]);
         })
+    var openForecast = 'https://api.openweathermap.org/data/2.5/forecast?q=' +
+        city
+        + '&appid=b1297dbea07dac5052c9756cbdb9040d'
+    fetch (encodeURI(openForecast)) 
+    .then(function(response) {
+        if (response.ok) { 
+            return response.json();
+        } else {
+            alert("Error: Not a valid city.");
+        }
+    })
+    .then(function(openForecastData) {
+        console.log(openForecastData);
+        displayForecast(openForecastData);
+    });
+
 };
 
 var displayUV = function(sunIndex) {
@@ -78,19 +97,43 @@ var displayCurrent = function(weather) {
 
 };
 
-// Get Future Forecast
-var getForecast = function(zipCode) {
-    var openWeather =  'https://api.openweathermap.org/data/2.5/forecast?zip=' +
-        zipCode +
-    '&appid=b1297dbea07dac5052c9756cbdb9040d'
-    fetch(openWeather)       
-        .then(function(response) {
-            if (response.ok) {
-                response.json().then(function(data) {
-                    displayCurrent(data);
-                });
-        };
-    });
+// display forecast
+var displayForecast = function(forecast) {
+    for (var i = 0; i < 5; i++) {
+        console.log("#card-" + i);
+        var forecastCardId = "#card-" + i;
+        var forecastCardEl = document.querySelector(forecastCardId);
+        var forecastDateEl = document.createElement("p");
+        var forecastDescriptionEl = document.createElement("p");
+        var forecastTempEl = document.createElement("p");
+        var forecastHumidEl = document.createElement("p");
+
+        var num = (i * 8) - 1;
+        if (num < 0) {
+            num = 0;
+        }
+        var n = num.toString();
+        console.log(num);
+        forecastDateEl.textContent = forecast["list"][n]["dt_txt"];
+        forecastCardEl.appendChild(forecastDateEl);
+
+        forecastDescriptionEl.textContent = forecast["list"][n]["weather"][0]["description"];
+        forecastCardEl.appendChild(forecastDescriptionEl);
+
+        var iconcode = forecast["list"][n]["weather"][0]["icon"];
+        var iconURI = 'http://openweathermap.org/img/wn/' + iconcode + '@2x.png';
+        var forecastIconEl = document.createElement("img");
+        forecastIconEl.setAttribute("src", iconURI);
+        forecastCardEl.appendChild(forecastIconEl);
+
+        var temp = forecast["list"][n]["main"]["temp"];
+        var fahrenheit = convertTemp(temp); 
+        forecastTempEl.textContent = fahrenheit;
+        forecastCardEl.appendChild(forecastTempEl);
+
+        forecastHumidEl.textContent = forecast["list"][n]["main"]["humidity"];
+        forecastCardEl.appendChild(forecastHumidEl);
+    };
 };
 
 
@@ -100,7 +143,7 @@ var convertTemp = function(kelvin) {
 
     var fahrenheit=((kelvin-273.15)*1.8)+32;
 
-    return fahrenheit;
+    return parseInt(fahrenheit);
 };
 
 
@@ -120,13 +163,31 @@ var getUvIndex = function(lat, lon) {
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
-    var zipCode = searchEl.value.trim();
+    var city = searchEl.value.trim();
+    cities.push(city);
+    localStorage.setItem("cities", JSON.stringify(cities));
 
-    if(zipCode) {
-        getWeather(zipCode);
+    if(city) {
+        getWeather(city);
         searchEl.value = "";
     }
+    loadCities();
 }
+
+var loadCities = function() {
+    var savedCities = JSON.parse(localStorage.getItem("cities"));
+    if (savedCities) {
+        
+        for (var i = 0; i < savedCities.length ; i++) {
+            var cityButtonEl = document.createElement("button");
+            cityButtonEl.textContent = savedCities[i];
+            savedCitiesEl.appendChild(cityButtonEl);
+        };
+    };
+};
+
+loadCities();
+
 
 userFormEl.addEventListener("submit", formSubmitHandler)
 

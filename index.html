@@ -15,13 +15,17 @@
             </header>
         </div>
         <div class="grid sidebar">
-            <div class="card">
-                <h3 class="card-header text-uppercase">Search By Zip-Code</h3>
+            <div class="sidebar">
+                <h3 class="card-header text-uppercase">Search By City</h3>
                 <form id="user-form" class="card-body">
                   <label class="form-label" for="search">City</label>
                   <input name="input" id="search" type="text" autofocus="true" class="form-input" />
                   <button type="submit" class="btn">Search</button>
                 </form>
+              </div>
+              
+              <div id="saved-cities" class="cities">
+                  saved searches
               </div>
         </div>
         <div class="weather-container">
@@ -30,7 +34,31 @@
                 <div id="right-now" class="list-group"></div>
             </div>
         </div>
-        <div class="grid extra content"></div>
+        <div id="forecast-container" class="extra">
+            <div class="cards">
+                <div id="card-0" class="card">
+                    Card 1
+                    <div id="icon"></div>
+                </div>
+                <div id="card-1" class="card">
+                    Card 2
+                    <div id="icon"></div>
+                </div>
+                <div id="card-2" class="card">
+                    Card 3
+                    <div id="icon"></div>
+                </div>
+                <div id="card-3" class="card">
+                    Card 4
+                    <div id="icon"></div>
+                </div>
+                <div id="card-4" class="card">
+                    Card 5
+                    <div id="icon"></div>
+                </div>
+            </div>
+
+        </div>
         <div class="grid footer"></div>
     </div>
 
