@@ -91,6 +91,10 @@ var displayCurrent = function(weather) {
     weatherNowEl.appendChild(humidityEl);
     weatherNowEl.appendChild(windEl);
  
+    // remove appended child from rightNowEl
+    while (rightNowEl.hasChildNodes()){
+        rightNowEl.removeChild(rightNowEl.firstChild);
+    }
 
     //append to dom
     rightNowEl.appendChild(weatherNowEl);
@@ -99,6 +103,7 @@ var displayCurrent = function(weather) {
 
 // display forecast
 var displayForecast = function(forecast) {
+
     for (var i = 0; i < 5; i++) {
         console.log("#card-" + i);
         var forecastCardId = "#card-" + i;
@@ -114,6 +119,13 @@ var displayForecast = function(forecast) {
         }
         var n = num.toString();
         console.log(num);
+
+        // remove appended child from rightNowEl
+        while (forecastCardEl.hasChildNodes()){
+            forecastCardEl.removeChild(forecastCardEl.firstChild);
+        }
+
+        // append card child elements
         forecastDateEl.textContent = forecast["list"][n]["dt_txt"];
         forecastCardEl.appendChild(forecastDateEl);
 
