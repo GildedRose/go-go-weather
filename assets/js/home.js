@@ -175,15 +175,21 @@ var formSubmitHandler = function(event) {
 }
 
 var loadCities = function() {
-    var savedCities = JSON.parse(localStorage.getItem("cities"));
-    if (savedCities) {
-        
-        for (var i = 0; i < savedCities.length ; i++) {
+    cities = JSON.parse(localStorage.getItem("cities"));
+    if (cities) {
+        console.log(cities);
+        while (savedCitiesEl.hasChildNodes()){
+            savedCitiesEl.removeChild(savedCitiesEl.firstChild);
+        }
+        // for every saved city in local storage, a button is created and appended to saveCitiesEl
+        for (var i = 0; i < cities.length ; i++) {
             var cityButtonEl = document.createElement("button");
-            cityButtonEl.textContent = savedCities[i];
+            cityButtonEl.textContent = cities[i];
             savedCitiesEl.appendChild(cityButtonEl);
-        };
-    };
+        }
+    } else {
+        cities = [];
+    }; 
 };
 
 loadCities();
