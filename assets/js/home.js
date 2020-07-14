@@ -176,10 +176,13 @@ var getUvIndex = function(lat, lon) {
 var formSubmitHandler = function(event) {
     event.preventDefault();
     var city = searchEl.value.trim();
-    cities.push(city);
-    localStorage.setItem("cities", JSON.stringify(cities));
+    
 
     if(city) {
+        if (cities.indexOf(city) == -1) {
+            cities.push(city);
+            localStorage.setItem("cities", JSON.stringify(cities));
+        }
         getWeather(city);
         searchEl.value = "";
     }
@@ -208,7 +211,3 @@ loadCities();
 
 
 userFormEl.addEventListener("submit", formSubmitHandler)
-
-
-// array needed
-// response.weather[i].description 
