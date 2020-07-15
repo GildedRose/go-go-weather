@@ -67,10 +67,11 @@ p {
     grid-gap: 1rem;
 }
 
-.card {
+.card #card {
     border: 2px solid #000000;
     border-radius: 4px;
     padding: .5rem;
+    background-color: var(--teriary-color);
 }
 
 .footer{

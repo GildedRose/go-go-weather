@@ -4,7 +4,7 @@ var searchEl = document.querySelector("#search");
 var currentContainerEl = document.querySelector("#current-container");
 var citySearchEl = document.querySelector("#city-search-zip");
 var rightNowEl = document.querySelector("#right-now");
-var savedCitiesEl = document.querySelector("#saved-cities");
+var savedCitiesEl = document.querySelector(".list-group-item");
 
 
 var getWeather = function(city) {
@@ -191,16 +191,17 @@ var formSubmitHandler = function(event) {
 
 var loadCities = function() {
     cities = JSON.parse(localStorage.getItem("cities"));
+    console.log(cities)
     if (cities) {
         console.log(cities);
         while (savedCitiesEl.hasChildNodes()){
             savedCitiesEl.removeChild(savedCitiesEl.firstChild);
-        }
+        };
         // for every saved city in local storage, a button is created and appended to saveCitiesEl
         for (var i = 0; i < cities.length ; i++) {
-            var cityButtonEl = document.createElement("button");
-            cityButtonEl.textContent = cities[i];
-            savedCitiesEl.appendChild(cityButtonEl);
+            var cityButtonEl = $("<li>").addClass("list-group-item").text(cities[i]);
+            //cityButtonEl.textContent = cities[i];
+            $(savedCitiesEl).append(cityButtonEl);
         }
     } else {
         cities = [];
