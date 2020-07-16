@@ -27,5 +27,6 @@ User will input city name into the search bar. Upon hitting enter, current date 
 
 ## Screenshot:
 
+![screenshot](https://user-images.githubusercontent.com/53442874/87618380-55571b00-c6df-11ea-8371-69cb172e5b6a.png)
 
 
