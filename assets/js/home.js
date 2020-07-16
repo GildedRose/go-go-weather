@@ -6,7 +6,6 @@ var citySearchEl = document.querySelector("#city-search-zip");
 var rightNowEl = document.querySelector("#right-now");
 var savedCitiesEl = document.querySelector(".list-group-item");
 
-
 var getWeather = function(city) {
     var openWeather =  'https://api.openweathermap.org/data/2.5/weather?q=' +
         city +
@@ -52,18 +51,20 @@ var getWeather = function(city) {
         console.log(openForecastData);
         displayForecast(openForecastData);
     });
-
 };
 
 var displayUV = function(sunIndex) {
     var weatherNowEl = document.querySelector("#weather-now");
     var uvIndexEl = document.createElement("p");
-    uvIndexEl.textContent = sunIndex;
+    uvIndexEl.textContent = "UV:  " + sunIndex;
     weatherNowEl.appendChild(uvIndexEl);
 };
 
+// get current date
+var now = moment().format("dddd, MMMM Do");
+
 var displayCurrent = function(weather) {
-    citySearchEl.textContent = weather["name"];
+    citySearchEl.textContent = weather["name"] + " " + now;
 
     // create a container for each key value
     var weatherNowEl = document.createElement("p");
@@ -76,15 +77,15 @@ var displayCurrent = function(weather) {
     var fahrenheit = convertTemp(temp);
 
     var tempEl = document.createElement("p");
-    tempEl.textContent = fahrenheit
+    tempEl.textContent = "Tempreature:  " + fahrenheit
     
     // get humidity
     var humidityEl = document.createElement("p");
-    humidityEl.textContent = weather["main"]["humidity"];
+    humidityEl.textContent = "Humidity:  " +  weather["main"]["humidity"] + "%";
 
     // get wind speed
     var windEl = document.createElement("p");
-    windEl.textContent = weather["wind"]["speed"];
+    windEl.textContent = "Wind Speed:  " + weather["wind"]["speed"] + " mph";
 
     //append to container
     weatherNowEl.appendChild(tempEl);
@@ -98,7 +99,6 @@ var displayCurrent = function(weather) {
 
     //append to dom
     rightNowEl.appendChild(weatherNowEl);
-
 };
 
 // display forecast
@@ -113,12 +113,11 @@ var displayForecast = function(forecast) {
         var forecastTempEl = document.createElement("p");
         var forecastHumidEl = document.createElement("p");
 
-        var num = (i * 8) - 1;
+        var num = (i * 9) - 1;
         if (num < 0) {
             num = 0;
         }
         var n = num.toString();
-        console.log(num);
 
         // remove appended child from rightNowEl
         while (forecastCardEl.hasChildNodes()){
@@ -140,10 +139,10 @@ var displayForecast = function(forecast) {
 
         var temp = forecast["list"][n]["main"]["temp"];
         var fahrenheit = convertTemp(temp); 
-        forecastTempEl.textContent = fahrenheit;
+        forecastTempEl.textContent = "Temp:  " + fahrenheit;
         forecastCardEl.appendChild(forecastTempEl);
 
-        forecastHumidEl.textContent = forecast["list"][n]["main"]["humidity"];
+        forecastHumidEl.textContent = "Humidity:  " + forecast["list"][n]["main"]["humidity"] + "%";
         forecastCardEl.appendChild(forecastHumidEl);
     };
 };
@@ -177,7 +176,6 @@ var formSubmitHandler = function(event) {
     event.preventDefault();
     var city = searchEl.value.trim();
     
-
     if(city) {
         if (cities.indexOf(city) == -1) {
             cities.push(city);
@@ -200,15 +198,15 @@ var loadCities = function() {
         // for every saved city in local storage, a button is created and appended to saveCitiesEl
         for (var i = 0; i < cities.length ; i++) {
             var cityButtonEl = $("<li>").addClass("list-group-item").text(cities[i]);
-            //cityButtonEl.textContent = cities[i];
-            $(savedCitiesEl).append(cityButtonEl);
+            $(savedCitiesEl).append(cityButtonEl); 
+        //$(cityButtonEl).click(formSubmitHandler(cities)) ;
+            
         }
     } else {
-        cities = [];
-    }; 
+        cities = [];        
+    }
 };
 
 loadCities();
-
 
 userFormEl.addEventListener("submit", formSubmitHandler)
